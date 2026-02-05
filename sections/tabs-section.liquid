@@ -1,0 +1,208 @@
+<section class="collections">
+    <h2 class="collections-title">{{ section.settings.section_title }}</h2>
+    
+    <div class="filter-tabs">
+        {% for block in section.blocks %}
+        <button class="filter-tab {% if forloop.first %}active{% endif %}" onclick="filterItems('{{ block.type }}')">
+            {{ block.settings.collection_title }}
+        </button>
+        {% endfor %}
+    </div>
+    
+    <div class="collection-items">
+        {% for block in section.blocks %}
+        <div class="collection-block {{ block.type }}" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+            {% assign collection_products = collections[block.settings.collection].products %}
+            {% for product in collection_products limit: section.settings.products_to_show %}
+            <div class="collection-item">
+                <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
+                <h3>{{ product.title }}</h3>
+                <div class="price">
+                    <span>{{ product.price | money }}</span>
+                    {% if product.compare_at_price > product.price %}
+                    <span class="original-price">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% if collection_products.size > section.settings.products_to_show %}
+            <a href="{{ block.settings.view_all_link }}" class="view-all-btn">{{ section.settings.view_all_text }}</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+  .collections {
+    padding: 40px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.collections-title {
+    font-size: 32px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.filter-tabs {
+    margin-bottom: 30px;
+}
+
+.filter-tab {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-tab.active {
+    background-color: #333333;
+}
+
+.collection-items {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.collection-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.collection-item img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.collection-item h3 {
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 16px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999999;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.collection-item:hover {
+    transform: translateY(-10px);
+}
+
+.view-all-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view-all-btn:hover {
+    background-color: #333333;
+}
+
+</style>
+
+
+
+
+<script>
+function filterItems(category) {
+    var items = document.querySelectorAll('.collection-block');
+    var tabs = document.querySelectorAll('.filter-tab');
+
+    tabs.forEach(function(tab) {
+        tab.classList.remove('active');
+    });
+
+    items.forEach(function(item) {
+        if (item.classList.contains(category)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    document.querySelector('.filter-tab[onclick="filterItems(\'' + category + '\')"]').classList.add('active');
+}
+</script>
+
+
+{% schema %}
+{
+  "name": "Collections Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "COLLECTIONS"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "default": 4,
+      "label": "Number of products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": false,
+      "label": "show_view_all"
+    },
+  ],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_title",
+          "label": "Block Title",
+          "default": "New Arrival"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+
+{% endschema %}

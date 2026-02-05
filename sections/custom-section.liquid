@@ -1,0 +1,31 @@
+<div class="new-product-wrapper">
+    <h3>New Products</h3>
+
+    <div class="new-product-grid">
+        {% for product in collections.products %}
+            {% if product.tags contains "New" %}
+                    <div class="new-product-card">
+                        <a href= "{{ product.url }}" >
+                            <img src="{{ product.featured_image | img_url }}">
+                        </a>
+
+                        <h3>
+                            <a href="{{ product.url }}">{{ product.title }}</a>
+                        </h3> 
+
+                            <p>{{ product.price | money }}</p>
+                    </div>
+
+
+                {% endif %}
+
+
+
+            {% endfor %}
+
+    </div>
+
+
+
+
+</div>

@@ -1,0 +1,36 @@
+{% comment %} <section id="blog-list">
+    <div class="filter-control">
+        <label for = " blog-sort-{{ section-id }}">Sort</label>
+
+
+
+</section>
+<div id="blog-posts-container">
+        
+        {% for article in blog.articles %}
+            {% render 'article-card', article: article %}
+        {% endfor %}
+    </div> {% endcomment %}
+
+        <!-- sections/main-blog.liquid or blog.liquid -->
+    {% comment %} blog.liquid {% endcomment %}
+<div class="page-width">
+  <h1>{{ blog.title }}</h1>
+
+  <div class="blog-filters">
+    <label for="blog-sort-order">Sort by:</label>
+    <select id="blog-sort-order">
+      <option value="title-asc">A-Z</option>
+      <option value="title-desc">Z-A</option>
+      <option value="title-desc">New to Old</option>
+      <option value="title-desc">Old to New</option>
+    </select>
+  </div>
+
+  {% comment %} <div id="blog-posts-container">
+    {% for article in blog.articles %}
+      {% render 'article-card', article: article %}
+    {% endfor %}
+  </div>
+</div> {% endcomment %}
+{% render 'article-card', article: article %}

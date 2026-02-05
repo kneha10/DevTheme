@@ -1,0 +1,151 @@
+{% schema %}
+{
+  "name": "Product Tab Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Shop Our Collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title",
+          "default": "Trending"
+        },
+        {
+          "type": "collection",
+          "id": "tab_collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "range",
+          "id": "tab_limit",
+          "label": "Number of Products",
+          "default": 8,
+          "min": 2,
+          "max": 50,
+          "step": 1
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs",
+      "category": "Home"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+<section class="product-tab-collection">
+  <div class="tab-container" style="margin: 20px 0;">
+    <h2>{{ section.settings.title }}</h2>
+    <ul class="tab-titles">
+      {% for block in section.blocks %}
+        <li><a href="#tab-{{ forloop.index }}" class="tab-title {% if forloop.first %}active{% endif %}">{{ block.settings.tab_title }}</a></li>
+      {% endfor %}
+    </ul>
+    
+    <div class="tab-content">
+      {% for block in section.blocks %}
+        <div id="tab-{{ forloop.index }}" class="tab-panel {% if forloop.first %}active{% endif %}">
+          {% assign collection = collections[block.settings.tab_collection] %}
+          {% if collection %}
+            <div class="product-grid">
+              {% for product in collection.products limit: block.settings.tab_limit %}
+                <div class="product-item">
+                  <a href="{{ product.url }}">
+                    <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                    <p>{{ product.title }}</p>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p>No products available in this collection.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_view_all %}
+      <a href="/collections/all" class="view-all-btn">View All Products</a>
+    {% endif %}
+  </div>
+</section>
+
+<!-- CSS -->
+<style>
+  .tab-titles {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+  }
+  .tab-title {
+    text-decoration: none;
+    padding: 10px 20px;
+    background: #f4f4f4;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .tab-title.active {
+    background: #000;
+    color: #fff;
+  }
+  .tab-content .tab-panel {
+    display: none;
+  }
+  .tab-content .tab-panel.active {
+    display: block;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  .product-item img {
+    max-width: 100%;
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tabTitles = document.querySelectorAll('.tab-title');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    
+    tabTitles.forEach((title, index) => {
+      title.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        tabTitles.forEach(t => t.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+        
+        title.classList.add('active');
+        tabPanels[index].classList.add('active');
+      });
+    });
+    
+    // Set the first tab as active by default
+    tabTitles[0].classList.add('active');
+    tabPanels[0].classList.add('active');
+  });
+</script>

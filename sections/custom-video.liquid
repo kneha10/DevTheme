@@ -1,0 +1,191 @@
+
+    <div class="video-section">
+    <div class="content">
+        <h2>{{ section.settings.heading }} <br>
+            <span>{{ section.settings.subheading }}</span></h2>
+        <p>{{ section.settings.paragraph_1 }}</p>
+        <p>{{ section.settings.paragraph_2 }}</p>
+        <a href="{{ section.settings.link_url }}" class="know-more">{{ section.settings.link_text }} <span>&rarr;</span></a>
+    </div>
+    <!-- <div class="video-container">
+        <img src="{{ section.settings.video_thumbnail | img_url: 'master' }}" alt="Video Thumbnail">
+        <a href="{{ section.settings.video_url }}" class="play-button">
+            <span>&#9658;</span>
+        </a>
+    </div> -->
+<div class="video-container">
+    <div id="video-placeholder">
+        <img src="{{ section.settings.video_thumbnail | img_url: 'master' }}" alt="Video Thumbnail">
+        <a href="#" class="play-button" onclick="playVideo(event)">
+            <span>&#9658;</span>
+        </a>
+    </div>
+</div>
+
+</div>
+
+<script>
+function playVideo(event) {
+    event.preventDefault();
+    const videoUrl = "{{ section.settings.video_url }}"; // Update this line with the correct video URL if needed
+    const videoContainer = document.querySelector('.video-container');
+    
+    videoContainer.innerHTML = `
+        <video controls autoplay>
+            <source src="${videoUrl}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video> `;
+}
+</script>
+
+<style>
+#shopify-section-template--23171398697259__custom_video_ieHk7G {
+  background-color: #1444A5;
+}
+body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0033cc;
+      color: white;
+  }
+
+
+.video-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content {
+    max-width: 50%;
+}
+
+a.know-more {
+    /* font-size: 1rem; */
+    color: yellow;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+a.know-more span {
+    margin-left: 10px;
+    font-size: 1.5rem;
+    transition: margin-left 0.3s ease;
+}
+
+a.know-more:hover span {
+    margin-left: 20px;
+}
+
+.video-container {
+    position: relative;
+    max-width: 40%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.video-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffcc00;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.play-button:hover {
+    background-color: #e6b800;
+}
+
+.play-button span {
+    font-size: 2rem;
+    color: #0033cc;
+}
+
+</style>
+
+
+
+{% schema %}
+  {
+  "name": "Custom Video Section",
+  "tag": "section",
+  "class": "custom-video-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lorem ipsum dolor sit amet,"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "consectetur adipiscing elit,"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Know More"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL",
+     
+    },
+    {
+      "type": "image_picker",
+      "id": "video_thumbnail",
+      "label": "Video Thumbnail",
+     
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Video URL",
+     
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Video Section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+
+{% endschema %}

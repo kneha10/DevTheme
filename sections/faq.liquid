@@ -1,0 +1,76 @@
+{{ "section-faq.css" | asset_url | stylesheet_tag  }}
+
+{% comment %} This is dynamic {% endcomment %}
+
+<div class="page-width faq">
+  <h2 class="faq-heading">{{ section.settings.headline }}</h2>
+
+  {% for block in section.blocks %}
+     <div class="faq_row">
+        <input type="checkbox" id="question-{{ forloop.index }}" class="faq_toggle"></input>
+        <label for="question-{{ forloop.index }}" class="faq_question">{{ block.settings.question }}</label>
+        <div class="faq_answer">{{ block.settings.answer }}</div>
+     </div>
+  {% endfor %}
+
+</div>
+
+
+{% comment %} This is all Static {% endcomment %}
+<!-- <div class="page-width faq">
+  <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+<div class="faq_row">
+  <input type="checkbox" id="question-1" class="faq_toggle"></input>
+  <label for="question-1" class="faq_question">What is your Return Policy?</label>
+  <div class="faq_answer">A basic return policy explains to customers if you accept returns and offer any refunds or exchanges after they've purchased an item they no longer want. It sets your customers' expectations about: If you accept returns, offer refunds, exchanges, or store credit.</div>
+
+</div>
+
+<div class="faq_row">
+  <input type="checkbox" id="question-2" class="faq_toggle"></input>
+  <label for="question-2" class="faq_question">How long does Shipping take?</label>
+  <div class="faq_answer"> Standard Shipping take 3-4 bussiness day.</div>
+
+</div>
+ -->
+
+
+{% schema %}
+  {
+      "name": "FAQ",
+      "settings": [
+{
+    "type":"text",
+    "label":"Headline",
+    "id":"headline"
+}
+
+],
+"blocks":[
+  {
+    "name":"question",
+    "type":"question",
+    "settings":[
+      {
+        "type":"text",
+        "label":"question",
+        "id":"question"
+      },
+      {
+        "type":"text",
+        "label":"answer",
+        "id":"answer"
+        
+      }
+    ]
+  }
+],
+    "presets": [
+      {
+        "name":"FAQ"
+      }
+    ]
+
+  }
+{% endschema %}

@@ -1,0 +1,119 @@
+{% schema %}
+{
+  "name": "mega-menu-image",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Mega dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Enter navigation item to apply a mega dropdown",
+          "default": "T-SHIRTS"
+        },
+        {
+          "type": "image_picker",
+          "id": "nav_image",
+          "label": "Featured image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+          
+        },
+        {
+          "type": "checkbox",
+          "id": "show_images",
+          "label": "Show images",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mega dropdown",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="navigation">
+  <ul class="navigation__menu">
+    {% for block in section.blocks %}
+      <li class="navigation__menuitem navigation__menuitem--dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="navigation__menulink" href="{{ block.settings.link }}">
+          {{ block.settings.menu_item }}
+        </a>
+
+        <!-- Mega Menu Content -->
+        <ul class="megamenu row grid__wrapper">
+          {% if block.settings.show_images and block.settings.nav_image != blank %}
+            <span class="megamenu__list-container">
+              <div class="megamenu__wrapper">
+                <div class="megamenu__image-container">
+                  <a href="{{ block.settings.link }}">
+                    <img src="{{ block.settings.nav_image | img_url: 'medium' }}" alt="{{ block.settings.menu_item }}">
+                  </a>
+                </div>
+              </div>
+            </span>
+          {% endif %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+<style>
+  .navigation {
+    position: relative;
+  }
+
+  .navigation__menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .navigation__menuitem {
+    position: relative;
+  }
+
+  .navigation__menulink {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+  }
+
+  .navigation__menuitem--dropdown:hover .megamenu {
+    display: block;
+  }
+
+  .megamenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .megamenu__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .megamenu__image-container img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

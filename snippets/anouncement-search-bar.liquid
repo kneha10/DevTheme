@@ -1,0 +1,43 @@
+<form action="/search" method="get" class="search-bar">
+  <input type="hidden" name="type" value="product" />
+  <input
+    type="text"
+    name="q"
+    placeholder="Search our books"
+    class="search-input"
+    aria-label="Search"
+  />
+  <button type="submit" class="search-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path fill="none" d="M0 0h24v24H0z"/>
+      <path fill="#FF5722" d="M11 2a9 9 0 0 1 7.34 14.36l4.3 4.29-1.42 1.42-4.29-4.3A9 9 0 1 1 11 2zm0 2a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+    </svg>
+  </button>
+</form>
+
+<style>
+  .search-bar {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    max-width: 400px;
+  }
+
+  .search-input {
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .search-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .search-button svg {
+    fill: #FF5722;
+  }
+</style>

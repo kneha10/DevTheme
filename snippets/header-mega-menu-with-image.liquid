@@ -1,0 +1,102 @@
+<div class="navigation">
+  <ul class="navigation__menu">
+    {% for block in section.blocks %}
+      <li class="navigation__menuitem">
+        <a href="{{ block.settings.menu_link }}" class="navigation__menulink">{{ block.settings.menu_title }}</a>
+
+        {% if block.settings.show_image and block.settings.menu_image != blank %}
+          <div class="megamenu__image-container">
+            <a href="{{ block.settings.menu_link }}">
+              <img src="{{ block.settings.menu_image | img_url: 'medium' }}" alt="{{ block.settings.menu_title }}">
+            </a>
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+<style>
+.navigation__menuitem:hover .megamenu__image-container {
+  display: block !important;  /* Ensures the container is shown */
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 1000;  /* Ensure it's above other elements */
+}
+.megamenu__image-container {
+  z-index: 9999;  /* Higher value than other elements */
+}
+
+ .navigation {
+  position: relative;
+  z-index: 1000; /* Ensures the menu stays above other content */
+}
+
+.navigation__menu {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation__menuitem {
+  position: relative;
+  padding: 10px 20px;
+}
+
+.navigation__menulink {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px; /* Adds padding to increase clickable area */
+  display: inline-block;
+  transition: color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.navigation__menulink:hover {
+  color: #f5c942; /* Example hover effect for link */
+}
+
+.navigation__menuitem:hover .megamenu__image-container {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.megamenu__image-container {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px); /* Start slightly below */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth dropdown transition */
+}
+
+.megamenu__image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .navigation__menu {
+    display: block; /* Stacks menu items vertically on mobile */
+    text-align: center;
+  }
+  
+  .navigation__menuitem {
+    padding: 15px 0;
+  }
+  
+  .megamenu__image-container {
+    display: none; /* Hide image dropdown on smaller screens */
+  }
+}
+
+</style>

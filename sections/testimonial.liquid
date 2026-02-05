@@ -1,0 +1,213 @@
+{% schema %}
+{
+  "name": "Testimonial Group",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "This is heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio officia animi nesciunt voluptates magni et alias maiores delectus provident. Iste corporis qui explicabo facilis nulla!"
+        },
+        {
+          "type": "text",
+          "id": "testimonial_author",
+          "label": "Testimonial Author",
+          "default": "Lorem Ispem"
+        },
+        {
+          "type": "text",
+          "id": "testimonial_subtext",
+          "label": "Subtext below Author",
+          "default": "CEO, Example Company"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Group",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="testimonial-group">
+  <div class="container">
+    <h2>{{ section.settings.heading }}</h2>
+    <!-- Slider main container -->
+    <div class="swiper mySwiper">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="slider-wrapper">
+              <p class="testimonial-text">
+                <span class="quote-icon start-quote">“</span>{{ block.settings.testimonial_text }}<span class="quote-icon end-quote">”</span>
+              </p>
+              <h5>{{ block.settings.testimonial_author }}</h5>
+              <p class="testimonial-subtext">{{ block.settings.testimonial_subtext }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+.container {
+  max-width: 90%;
+  margin: 0 auto;
+}
+.testimonial-group h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2rem;
+  color: #333;
+}
+.swiper mySwiper swiper-wrapper{
+  display:flex;
+  justify-content: center;
+}
+.testimonial-group .slider-wrapper {
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 30px 25px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  transition: transform 0.3s ease-in-out;
+  
+}
+.testimonial-group .slider-wrapper:hover {
+  transform: translateY(-10px);
+}
+.testimonial-group .slider-wrapper .testimonial-text {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.testimonial-group .slider-wrapper .testimonial-text .quote-icon {
+  font-size: 2rem;
+  color: #ccc;
+  position: absolute;
+  top: -10px;
+}
+.testimonial-group .slider-wrapper .testimonial-text .start-quote {
+  left: -10px;
+}
+.testimonial-group .slider-wrapper .testimonial-text .end-quote {
+  right: -10px;
+}
+.testimonial-group .slider-wrapper h5 {
+  font-size: 1.2rem;
+  color: #333;
+  text-align: end;
+}
+.testimonial-group .slider-wrapper .testimonial-subtext {
+  font-size: 0.9rem;
+  color: #999;
+  text-align: end;
+  margin-top: 5px;
+}
+.testimonial-group .mySwiper {
+  padding-bottom: 90px;
+}
+.testimonial-group .swiper-button-next:after,
+.testimonial-group .swiper-button-prev:after {
+  font-size: 25px;
+  line-height: 1;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  bottom: -7px;
+  top: auto;
+  color: gray;
+}
+.testimonial-group .mySwiper .swiper-button-next {
+  right: 40%;
+}
+.testimonial-group .mySwiper .swiper-button-prev {
+  left: 40%;
+}
+.swiper-pagination {
+  bottom: 0 !important;
+}
+.swiper-pagination-bullet {
+  background-color: gray;
+}
+.swiper-pagination-bullet-active {
+  background-color: black;
+}
+
+@media only screen and (max-width: 991.98px) {
+  .testimonial-group .mySwiper .swiper-button-next {
+    right: 20%;
+  }
+  .testimonial-group .mySwiper .swiper-button-prev {
+    left: 20%;
+  }
+}
+.swiper-wrapper{
+  display:flex !important;
+}
+.swiper-slide{
+  margin:10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var swiper = new Swiper('.mySwiper', {
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    loop: true,
+    breakpoints: {
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 30
+      },
+      756: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      991: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 25
+      }
+    }
+  });
+});
+</script>

@@ -1,0 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "demo",
+      "blocks": {
+        "demo_HNwKWf": {
+          "type": "demo",
+          "settings": {
+            "demo_text": "this is demo_text",
+            "demo_author": "XYZ",
+            "demo_subtext": "CEO, Company"
+          }
+        },
+        "demo_BiDG7Y": {
+          "type": "demo",
+          "settings": {
+            "demo_text": "this is demo_text",
+            "demo_author": "XYZ",
+            "demo_subtext": "CEO, Company"
+          }
+        }
+      },
+      "block_order": [
+        "demo_HNwKWf",
+        "demo_BiDG7Y"
+      ],
+      "settings": {
+        "heading": "Demo Heading"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
